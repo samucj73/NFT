@@ -1,7 +1,7 @@
-
 import streamlit as st
 from gerador_megasena import gerar_cartoes
 from util import exportar_pdf, exportar_txt
+from mega_estatisticas import calcular_estatisticas
 
 def ler_ultimo_resultado():
     try:
@@ -34,6 +34,11 @@ if st.button("🎰 Gerar Cartões"):
             acertos, qtd = comparar_com_ultimo(cartao, resultado)
             texto += f" | 🎯 {qtd} acertos: {', '.join(map(str, acertos)) if acertos else 'nenhum'}"
         st.success(texto)
+
+    # Mostrar estatísticas
+    st.subheader("📊 Estatísticas dos Números Gerados")
+    stats = calcular_estatisticas(st.session_state.historico)
+    st.write(stats)
 
 st.markdown("---")
 st.subheader("📥 Exportar Jogos")
